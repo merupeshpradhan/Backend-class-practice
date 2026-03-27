@@ -11,19 +11,19 @@ class ApiError extends Error {
   }
 
   static unauthorized(message = "unauthorized") {
-    return new ApiError(400, message);
+    return new ApiError(401, message);
   }
 
   static conflict(message = "conflict") {
-    return new ApiError(400, message);
+    return new ApiError(409, message);
   }
 
   static forbidden(message = "forbidden") {
-    return new ApiError(400, message);
+    return new ApiError(412, message);
   }
 
   static notfound(message = "notfound") {
-    return new ApiError(400, message);
+    return new ApiError(4012, message);
   }
 }
 
