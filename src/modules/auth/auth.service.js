@@ -1,3 +1,4 @@
+import { sendVerificationEmail } from "../../common/config/email.js";
 import ApiError from "../../common/utils/api-error.js";
 import {
   generateAccessToken,
@@ -25,6 +26,11 @@ const register = async ({ name, email, password, role }) => {
   });
 
   // TODO: send an email to user with token: rawToken
+  try {
+    await sendVerificationEmail(email, token);
+  } catch (error) {
+    console.log(error);
+  }
 
   const userObj = user.toObject();
   delete userObj.password;
