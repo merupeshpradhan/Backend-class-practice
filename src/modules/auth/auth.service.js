@@ -106,4 +106,23 @@ const forgotPassword = async (email) => {
   // TODO: mail bhejna nahi aata
 };
 
-export { register, login, refresh, logout, forgotPassword };
+const verifyEmail = async (token) => {
+  const hashedToken = hashToken(token);
+  const user = await User.findOne({ verificationToken: hashToken }).select(
+    "+verificationToken",
+  );
+
+  //if user not found
+  user.isVerified = true;
+  user.verificationToken = undefined;
+  await user.save();
+  return user;
+};
+
+const getMe = async (userId) => {
+  const user = await User.findOne(userId);
+  if (!user) throw ApiError.notfound("User not found");
+  return user;
+};
+
+export { register, login, refresh, logout, forgotPassword, verifyEmail, getMe };
