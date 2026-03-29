@@ -120,7 +120,7 @@ const verifyEmail = async (token) => {
   user.verificationToken = undefined;
 
   await user.save();
-  
+
   return user;
 };
 
@@ -130,4 +130,4 @@ const getMe = async (userId) => {
   return user;
 };
 
-export { register, login, refresh, logout, forgotPassword, verifyEmail, getMe };
+export { register, login, refresh, logout, forgotPassword, getMe, verifyEmail };

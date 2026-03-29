@@ -24,13 +24,13 @@ const logout = async (req, res) => {
   ApiResponse.ok(res, "Logout Success");
 };
 
-  // const verifyEmail = async (req, res) => {
-  //   const { token } = req.params;
+// const verifyEmail = async (req, res) => {
+//   const { token } = req.params;
 
-  //   const user = await authService.verifyEmail(token);
+//   const user = await authService.verifyEmail(token);
 
-  //   ApiResponse.ok(res, "Email verified successfully", user);
-  // };
+//   ApiResponse.ok(res, "Email verified successfully", user);
+// };
 
 // const forgotPassword = async (req, res) => {
 //   await authService.forgotPassword(req.body.email);
