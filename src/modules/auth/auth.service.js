@@ -27,7 +27,8 @@ const register = async ({ name, email, password, role }) => {
 
   // TODO: send an email to user with token: rawToken
   try {
-    await sendVerificationEmail(email, token);
+    // await sendVerificationEmail(email, token);
+    await sendVerificationEmail(email, rawtoken);
   } catch (error) {
     console.log(error);
   }
@@ -98,7 +99,7 @@ const forgotPassword = async (email) => {
   if (!user) throw ApiError.notfound("No acccount with that email");
 
   const { rawtoken, hashedToken } = generateResetToken();
-  user.resetPasswordtoken = hashToken;
+  user.resetPasswordtoken = hashedToken;
   user.resetpasswordExpires = Date.now() + 15 * 60 * 1000;
 
   await user.save();
@@ -108,19 +109,23 @@ const forgotPassword = async (email) => {
 
 const verifyEmail = async (token) => {
   const hashedToken = hashToken(token);
-  const user = await User.findOne({ verificationToken: hashToken }).select(
+  const user = await User.findOne({ verificationToken: hashedToken }).select(
     "+verificationToken",
   );
 
   //if user not found
+  if (!user) throw ApiError.badRequest("Invalid or expired token");
+
   user.isVerified = true;
   user.verificationToken = undefined;
+
   await user.save();
+  
   return user;
 };
 
 const getMe = async (userId) => {
-  const user = await User.findOne(userId);
+  const user = await User.findById(userId);
   if (!user) throw ApiError.notfound("User not found");
   return user;
 };
